@@ -1,0 +1,33 @@
+version: "3.7"
+services:
+  app:
+    build:
+      args:
+        user: tony
+        uid: 1000
+      context: ./
+      dockerfile: Dockerfile
+    image: photoapi
+    container_name: photoapi
+    restart: always
+    working_dir: /var/www/
+    environment:
+      - MAN=06f63743-0faa-4c88-b8aa-8933579b30bd
+    networks:
+      - photoapi
+
+  nginx:
+    image: nginx:alpine
+    container_name: photoapi-nginx
+    restart: unless-stopped
+    ports:
+      - 3800:80
+    volumes:
+      - ./:/var/www
+      - ./docker-compose/nginx:/etc/nginx/conf.d/
+    networks:
+      - photoapi
+
+networks:
+  photoapi:
+    driver: bridge
