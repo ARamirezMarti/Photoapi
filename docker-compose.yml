@@ -14,7 +14,7 @@ services:
     #volumes:
      # - ./:/var/www
     environment:
-      - MAN=06f63743-0faa-4c88-b8aa-8933579b30bd
+      - MAN=${MAN}
     networks:
       - photoapi
 
